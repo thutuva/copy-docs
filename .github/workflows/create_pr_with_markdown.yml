@@ -20,7 +20,6 @@ jobs:
       - name: Create Unique Branch
         run: |
           UNIQUE_BRANCH="update-$(date +'%Y%m%d%H%M%S')"
-          echo "UNIQUE_BRANCH=$UNIQUE_BRANCH" >> $GITHUB_ENV
           git checkout -b $UNIQUE_BRANCH
           
       - name: Download Artifact from First Repository
@@ -70,5 +69,5 @@ jobs:
           commit-message: "Add updated markdown file"
           title: "Update Markdown File"
           body: "This PR updates the markdown file."
-          branch: ${{ env.UNIQUE_BRANCH }}
+          branch: $UNIQUE_BRANCH
           base: main 
