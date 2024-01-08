@@ -17,6 +17,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         
+      - name: Create Unique Branch
+        run: |
+          UNIQUE_BRANCH="update-$(date +'%Y%m%d%H%M%S')"
+          echo "UNIQUE_BRANCH=$UNIQUE_BRANCH" >> $GITHUB_ENV
+          git checkout -b $UNIQUE_BRANCH
+          
       - name: Download Artifact from First Repository
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -38,12 +44,9 @@ jobs:
 
       - name: Commit and Push
         run: |
-          UNIQUE_BRANCH="update-$(date +'%Y%m%d%H%M%S')"
-          echo "UNIQUE_BRANCH=$UNIQUE_BRANCH" >> $GITHUB_ENV
-          git checkout -b $UNIQUE_BRANCH
           git add output.md
           git commit -m "Add updated markdown file"
-          git push --set-upstream origin $UNIQUE_BRANCH
+          git push --set-upstream origin ${{ env.UNIQUE_BRANCH }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
