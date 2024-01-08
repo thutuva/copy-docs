@@ -44,9 +44,24 @@ jobs:
 
       - name: Commit and Push
         run: |
+          echo "Current Branch:"
+          git branch --show-current
+      
+          echo "Git Status:"
+          git status
+      
+          echo "Attempting to add output.md to the commit"
           git add output.md
+      
+          echo "Git Status after add:"
+          git status
+      
+          echo "Committing the changes"
           git commit -m "Add updated markdown file"
+      
+          echo "Pushing to branch ${{ env.UNIQUE_BRANCH }}"
           git push --set-upstream origin ${{ env.UNIQUE_BRANCH }}
+
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
