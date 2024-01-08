@@ -24,6 +24,12 @@ jobs:
           name: markdown-artifact
           repo: thutuva/personal-tuva-test
 
+      - name: Check Current Directory and List Files
+        run: |
+          pwd
+          ls -la
+
+
       - name: Configure Git
         run: |
           git config user.name "thutuva"
