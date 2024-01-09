@@ -46,4 +46,4 @@ jobs:
           title: "Update Markdown File"
           body: "This PR updates the markdown file."
           branch: ${{ env.UNIQUE_BRANCH }}
-                  
+          base: main
