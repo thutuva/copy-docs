@@ -17,11 +17,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         
-      - name: Create Unique Branch
-        run: |
-          UNIQUE_BRANCH="update-$(date +'%Y%m%d%H%M%S')"
-          git checkout -b $UNIQUE_BRANCH
-          
       - name: Download Artifact from First Repository
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -29,39 +24,19 @@ jobs:
           name: markdown-artifact
           repo: thutuva/personal-tuva-test
 
-      - name: Check Current Directory and List Files
-        run: |
-          pwd
-          ls -la
-
-
       - name: Configure Git
         run: |
           git config user.name "thutuva"
           git config user.email "thuxuan@tuvahealth.com"
-
-
+          
       - name: Commit and Push
         run: |
-          echo "Current Branch:"
-          git branch --show-current
-      
-          echo "Git Status:"
-          git status
-      
-          echo "Attempting to add output.md to the commit"
+          UNIQUE_BRANCH="update-$(date +'%Y%m%d%H%M%S')"
+          git checkout -b $UNIQUE_BRANCH
           git add output.md
-      
-          echo "Git Status after add:"
-          git status
-      
-          echo "Committing the changes"
           git commit -m "Add updated markdown file"
-      
-          echo "Pushing to branch ${{ env.UNIQUE_BRANCH }}"
-          git push --set-upstream origin ${{ env.UNIQUE_BRANCH }}
-
-
+          git push --set-upstream origin $UNIQUE_BRANCH
+          
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
@@ -70,4 +45,4 @@ jobs:
           title: "Update Markdown File"
           body: "This PR updates the markdown file."
           branch: $UNIQUE_BRANCH
-          base: main 
+          base: main  # Base branch in second repo
