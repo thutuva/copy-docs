@@ -45,5 +45,5 @@ jobs:
           commit-message: "Add updated markdown file"
           title: "Update Markdown File"
           body: "This PR updates the markdown file."
-          branch: $UNIQUE_BRANCH
+          branch: ${{ env.UNIQUE_BRANCH }}
                   
