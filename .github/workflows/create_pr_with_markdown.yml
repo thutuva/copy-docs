@@ -2,10 +2,8 @@ name: Create Pull Request with Markdown
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Generate Markdown"]
-    types:
-      - completed
+  repository_dispatch:
+    types: [triggered_from_repo_a]
 
 
 jobs:
